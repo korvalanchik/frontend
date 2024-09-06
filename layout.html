@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<body hx-boost="true">
+    <header class="bg-light">
+        <div class="container">
+            <nav class="navbar navbar-light navbar-expand-md">
+                <a href="/" class="navbar-brand">
+                    <img src="static/images/logo.png" alt="My Baget" width="30" height="30" class="d-inline-block align-top">
+                    <span class="ps-1">My Baget</span>
+                </a>
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarToggle"
+                        aria-label="Toggle navigation" aria-controls="navbarToggle" aria-expanded="false">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="navbar-item">
+                            <a href="index.html" class="nav-link">Home</a>
+                        </li>
+                        <li class="navbar-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" id="navbarEntitiesLink" role="button"
+                                    aria-expanded="false">Entities</a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarEntitiesLink">
+                                <li><a href="orders/edit.html" class="dropdown-item">Orders</a></li>
+                                <li><a href="customer/edit.html" class="dropdown-item">Customers</a></li>
+                                <li><a href="parts/edit.html" class="dropdown-item">Parts</a></li>
+                            </ul>
+                        </li>
+                        <li class="navbar-item">
+                            <button id="logoutButton" class="btn btn-outline-danger">Logout</button>
+                        </li>
+    
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <main class="my-5">
+        <div class="container">
+            <p id="msg-success" class="alert alert-success mb-4" role="alert" style="display:none;">Success Message</p> <!-- Замінено на статичний текст -->
+            <p id="msg-info" class="alert alert-info mb-4" role="alert" style="display:none;">Info Message</p> <!-- Замінено на статичний текст -->
+            <p id="msg-error" class="alert alert-danger mb-4" role="alert" style="display:none;">Error Message</p> <!-- Замінено на статичний текст -->
+            <div id="content"></div> <!-- Замінено на статичний контент -->
+        </div>
+    </main>
+</body>
+</html>

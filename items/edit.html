@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Редагування товару</title> <!-- Статичний заголовок замість динамічного -->
+    </head>
+    <body>
+        <div class="d-flex flex-wrap mb-4">
+            <h1 class="flex-grow-1">Редагування товару</h1> <!-- Статичний заголовок -->
+            <div>
+                <a href="/orders/edit/{orderNo}" class="btn btn-secondary">Назад</a> <!-- Статичне посилання -->
+            </div>
+        </div>
+        <div id="global-errors"></div> <!-- Контейнер для глобальних помилок -->
+        <form id="item-form" method="post"> <!-- Вказуємо ID форми для доступу через JavaScript -->
+            <input type="submit" value="Зберегти" class="btn btn-primary mt-4 mb-4" />
+            <!-- Поля форми -->
+            <div class="row mb-3">
+                <label for="orderNo" class="col-md-2 col-form-label">Номер замовлення</label>
+                <div class="col-md-10">
+                    <input type="number" id="orderNo" name="orderNo" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="itemNo" class="col-md-2 col-form-label">Номер товару</label>
+                <div class="col-md-10">
+                    <input type="number" id="itemNo" name="itemNo" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="partNo" class="col-md-2 col-form-label">Номер частини</label>
+                <div class="col-md-10">
+                    <input type="number" id="partNo" name="partNo" class="form-control" />
+                </div>
+            </div>
+            <!-- Інші поля... -->
+            <input type="submit" value="Зберегти" class="btn btn-primary mt-4" />
+        </form>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const form = document.getElementById('item-form');
+                
+                // Відправка форми через AJAX
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault(); // Зупиняємо стандартну відправку форми
+
+                    const formData = new FormData(form);
+
+                    fetch(form.action, {
+                        method: 'POST',
+                        body: JSON.stringify(Object.fromEntries(formData)),
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        }
+                    }).then(response => {
+                        if (response.ok) {
+                            alert('Товар успішно збережено.');
+                        } else {
+                            response.json().then(data => {
+                                const errorsContainer = document.getElementById('global-errors');
+                                errorsContainer.innerHTML = ''; // Очищаємо попередні помилки
+                                data.errors.forEach(error => {
+                                    const p = document.createElement('p');
+                                    p.textContent = error;
+                                    p.className = 'alert alert-danger';
+                                    errorsContainer.appendChild(p);
+                                });
+                            });
+                        }
+                    }).catch(error => {
+                        console.error('Помилка:', error);
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>

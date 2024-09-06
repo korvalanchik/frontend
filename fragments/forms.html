@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+        <!-- Поле форми -->
+        <div class="row mb-3">
+            <label for="inputField" class="col-md-2 col-form-label">Назва поля</label>
+            <div class="col-md-10">
+                <input type="text" id="inputField" name="inputField" class="form-control" />
+                <div id="inputField-error" class="invalid-feedback d-block" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- Обробка форми -->
+        <script>
+            // Функція для створення поля вводу
+            function createInputField(fieldId, label, type = 'text', required = false, disabled = false) {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'row mb-3';
+
+                const labelElement = document.createElement('label');
+                labelElement.htmlFor = fieldId;
+                labelElement.className = 'col-md-2 col-form-label';
+                labelElement.textContent = label + (required ? '*' : '');
+                rowDiv.appendChild(labelElement);
+
+                const inputDiv = document.createElement('div');
+                inputDiv.className = 'col-md-10';
+
+                const inputElement = document.createElement('input');
+                inputElement.type = type;
+                inputElement.id = fieldId;
+                inputElement.name = fieldId;
+                inputElement.className = 'form-control';
+                if (disabled) {
+                    inputElement.disabled = true;
+                }
+                inputDiv.appendChild(inputElement);
+
+                const errorDiv = document.createElement('div');
+                errorDiv.id = `${fieldId}-error`;
+                errorDiv.className = 'invalid-feedback d-block';
+                errorDiv.style.display = 'none';
+                inputDiv.appendChild(errorDiv);
+
+                rowDiv.appendChild(inputDiv);
+
+                return rowDiv;
+            }
+
+            // Функція для створення поля з textarea
+            function createTextareaField(fieldId, label, required = false, disabled = false) {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'row mb-3';
+
+                const labelElement = document.createElement('label');
+                labelElement.htmlFor = fieldId;
+                labelElement.className = 'col-md-2 col-form-label';
+                labelElement.textContent = label + (required ? '*' : '');
+                rowDiv.appendChild(labelElement);
+
+                const inputDiv = document.createElement('div');
+                inputDiv.className = 'col-md-10';
+
+                const textareaElement = document.createElement('textarea');
+                textareaElement.id = fieldId;
+                textareaElement.name = fieldId;
+                textareaElement.className = 'form-control';
+                if (disabled) {
+                    textareaElement.disabled = true;
+                }
+                inputDiv.appendChild(textareaElement);
+
+                const errorDiv = document.createElement('div');
+                errorDiv.id = `${fieldId}-error`;
+                errorDiv.className = 'invalid-feedback d-block';
+                errorDiv.style.display = 'none';
+                inputDiv.appendChild(errorDiv);
+
+                rowDiv.appendChild(inputDiv);
+
+                return rowDiv;
+            }
+
+            // Функція для обробки та показу помилок
+            function showError(fieldId, errorMessage) {
+                const errorDiv = document.getElementById(`${fieldId}-error`);
+                if (errorDiv) {
+                    errorDiv.textContent = errorMessage;
+                    errorDiv.style.display = 'block';
+                }
+            }
+
+            // Функція для приховування помилок
+            function hideError(fieldId) {
+                const errorDiv = document.getElementById(`${fieldId}-error`);
+                if (errorDiv) {
+                    errorDiv.style.display = 'none';
+                }
+            }
+
+            // Приклад використання:
+            document.addEventListener("DOMContentLoaded", function() {
+                // Створюємо поля та додаємо їх на сторінку
+                const formContainer = document.getElementById('form-container');
+                formContainer.appendChild(createInputField('partNo', 'Номер частини', 'number', true));
+                formContainer.appendChild(createInputField('quantity', 'Кількість', 'number', true));
+                formContainer.appendChild(createTextareaField('description', 'Опис'));
+
+                // Додавання обробки помилок
+                document.getElementById('item-form').addEventListener('submit', function(event) {
+                    // Перевірка введених даних перед відправкою
+                    const partNo = document.getElementById('partNo').value;
+                    if (!partNo) {
+                        showError('partNo', 'Це поле обов’язкове для заповнення');
+                        event.preventDefault();
+                    } else {
+                        hideError('partNo');
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

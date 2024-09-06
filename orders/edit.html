@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Items Management</title>
+    <script src="..//static/js/items.js" defer></script> <!-- Підключення JS-файлу -->
+</head>
+<body>
+    <h1>Manage Items for Order #<span id="orderNo"></span></h1>
+
+    <!-- Список items -->
+    <div id="itemsList">
+        <!-- Список items буде тут відображено -->
+    </div>
+
+    <!-- Форма для додавання/оновлення item -->
+    <h2>Add or Update Item</h2>
+    <form id="itemForm">
+        <label for="partNo">Part No:</label>
+        <input type="number" id="partNo" name="partNo" required><br>
+
+        <label for="profilWidth">Profil Width:</label>
+        <input type="number" id="profilWidth" name="profilWidth" required><br>
+
+        <label for="width">Width:</label>
+        <input type="number" id="width" name="width" required><br>
+
+        <label for="height">Height:</label>
+        <input type="number" id="height" name="height" required><br>
+
+        <label for="qty">Quantity:</label>
+        <input type="number" id="qty" name="qty" required><br>
+
+        <label for="sellPrice">Sell Price:</label>
+        <input type="number" id="sellPrice" name="sellPrice" step="0.01" required><br>
+
+        <label for="discount">Discount:</label>
+        <input type="number" id="discount" name="discount" step="0.01" required><br>
+
+        <label for="onHand">On Hand:</label>
+        <input type="number" id="onHand" name="onHand" required><br>
+
+        <label for="cost">Cost:</label>
+        <input type="number" id="cost" name="cost" step="0.01" required><br>
+
+        <button type="button" onclick="submitItemForm()">Add/Update Item</button>
+    </form>
+
+    <script>
+        const orderNo = 1; // Наприклад, замовлення №1
+        document.getElementById('orderNo').innerText = orderNo;
+
+        // Завантажуємо items для order при завантаженні сторінки
+        fetchItems(orderNo);
+
+        function submitItemForm() {
+            const itemData = {
+                partNo: document.getElementById('partNo').value,
+                profilWidth: document.getElementById('profilWidth').value,
+                width: document.getElementById('width').value,
+                height: document.getElementById('height').value,
+                qty: document.getElementById('qty').value,
+                sellPrice: document.getElementById('sellPrice').value,
+                discount: document.getElementById('discount').value,
+                onHand: document.getElementById('onHand').value,
+                cost: document.getElementById('cost').value
+            };
+
+            const itemNo = 1; // Наприклад, item №1, у реальному застосунку можна отримати це значення динамічно
+
+            if (isNewItem) {
+                addItem(orderNo, itemData);
+            } else {
+                updateItem(orderNo, itemNo, itemData);
+            }
+        }
+
+        function updateUI(items) {
+            const itemsList = document.getElementById('itemsList');
+            itemsList.innerHTML = ''; // Очищуємо список перед відображенням нових даних
+
+            items.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.classList.add('item');
+                itemDiv.innerHTML = `
+                    <p>Item No: ${item.id.itemNo}</p>
+                    <p>Part No: ${item.partNo}</p>
+                    <p>Width: ${item.width}</p>
+                    <p>Height: ${item.height}</p>
+                    <button onclick="editItem(${item.id.itemNo})">Edit</button>
+                    <button onclick="deleteItem(${orderNo}, ${item.id.itemNo})">Delete</button>
+                `;
+                itemsList.appendChild(itemDiv);
+            });
+        }
+
+        function addItemToUI(item) {
+            // Логіка для додавання нового item до UI
+        }
+
+        function updateItemInUI(item) {
+            // Логіка для оновлення існуючого item в UI
+        }
+
+        function removeItemFromUI(itemNo) {
+            // Логіка для видалення item з UI
+        }
+
+        function editItem(itemNo) {
+            // Завантаження даних item у форму для редагування
+        }
+    </script>
+</body>
+</html>
